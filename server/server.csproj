@@ -8,17 +8,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9"/>
+        <PackageReference Include="AWSSDK.DynamoDBv2" Version="4.0.101.2" />
+        <PackageReference Include="AWSSDK.S3" Version="4.0.101.1" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="src\" />
     </ItemGroup>
 
 </Project>
