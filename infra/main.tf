@@ -34,6 +34,6 @@ resource "aws_dynamodb_table" "video_metadata" {
   
   attribute {
     name = "id"
-    type = "s"
+    type = "S"
   }
 }

@@ -5,7 +5,7 @@ echo "🌩  Starting Floci (local AWS emulator)..."
 docker compose up -d floci
 
 echo "⏳ Waiting for Floci to be ready..."
-until curl -s http://localhost:4566/_localstack/health > /dev/null 2>&1 || curl -s http://localhost:4566 > /dev/null 2>&1; do
+until curl -s http://0.0.0.0:4566/_localstack/health > /dev/null 2>&1 || curl -s http://localhost:4566 > /dev/null 2>&1; do
   sleep 1
   echo "   still waiting..."
 done
