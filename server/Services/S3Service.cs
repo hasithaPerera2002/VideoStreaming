@@ -1,14 +1,43 @@
+using Amazon.S3;
+using Amazon.S3.Model;
+
 namespace server.Services;
 
 public class S3Service : IVideoStorageService
 {
-    public Task<string> UploadVideoAsync(Stream fileStream, string fileName)
+    private readonly IAmazonS3 _s3Client;
+    private const string BucketName = "videos";
+
+    public S3Service(IAmazonS3 s3Client)
     {
-        throw new NotImplementedException();
+        _s3Client = s3Client;
     }
 
-    public Task<string> GetVideoUrlAsync(string s3Key)
+    public async Task<string> UploadVideoAsync(Stream fileStream, string fileName)
     {
-        throw new NotImplementedException();
+        var key = $"{Guid.NewGuid()}-{fileName}";
+
+        var request = new PutObjectRequest
+        {
+            BucketName = BucketName,
+            Key = key,
+            InputStream = fileStream,
+            ContentType = "video/mp4"
+        };
+
+        await _s3Client.PutObjectAsync(request);
+
+        return key;
+    }
+    public async Task<string> GetVideoUrlAsync(string s3Key)
+    {
+        var request = new GetPreSignedUrlRequest
+        {
+            BucketName = BucketName,
+            Key = s3Key,
+            Expires = DateTime.UtcNow.AddHours(1)
+        };
+
+        return await _s3Client.GetPreSignedURLAsync(request);
     }
 }
